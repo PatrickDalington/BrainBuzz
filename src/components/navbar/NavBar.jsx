@@ -3,7 +3,7 @@ import styles from './navbar.module.css'
 import React from 'react'
 import Link from 'next/link'
 import AuthLinks from '../authLinks/authLinks'
-import TheamToggle from '../theamToggle/theamToggle'
+import TheamToggle from '../TheamToggle/theamToggle'
 
 
 const NavBar = () => {
@@ -18,9 +18,9 @@ const NavBar = () => {
       <div className={styles.logo}>BrainBuzzer</div>
       <div className={styles.links}>
         <TheamToggle/>
-        <Link href="/">Homepage</Link>
-        <Link href="/about">About</Link>
-        <Link href="/contact">Contact</Link>
+        <Link href="/" className={styles.link}>Homepage</Link>
+        <Link href="/about" className={styles.link}>About</Link>
+        <Link href="/contact" className={styles.link}>Contact</Link>
         <AuthLinks/>
 
       </div>
