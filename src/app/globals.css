@@ -1,8 +1,8 @@
 :root{
-    --bg: black,
-    --textColor: red,
-    --softBg: #f0f0f0,
-    --softTextColor: #626262
+    --bg: black;
+    --textColor: #000000;
+    --softBg: #f0f0f0;
+    --softTextColor: #626262;
 }
 
 *{
@@ -28,6 +28,15 @@ a{
     --softTextColor: #a6a6a6;
 
 }
+
+.light{
+    --bg: black,
+    --textColor: red,
+    --softBg: #f0f0f0,
+    --softTextColor: #626262
+
+}
+
 
 
 .container{

@@ -15,7 +15,7 @@ const NavBar = () => {
         <Image src="/instagram.png" alt='facebook' height={24} width={24}/>
         <Image src="/youtube.png" alt='facebook' height={24} width={24}/>
       </div>
-      <div className={styles.logo}>BrainBuzzer</div>
+      <div className={styles.logo}>PostIT🕑</div>
       <div className={styles.links}>
         <TheamToggle/>
         <Link href="/" className={styles.link}>Homepage</Link>
