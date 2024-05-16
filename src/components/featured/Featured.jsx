@@ -6,7 +6,7 @@ import React from 'react'
 const Featured = () => {
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}><b>Hey there!,</b> Discorver and Share Anything - Tell us what's happening around you.</h1>
+      <h1 className={styles.title}><b>Hey there!,</b> Discorver and Share Anything - Tell us what&apos;s happening around you.</h1>
       <div className={styles.post}>
         <div className={styles.imgContainer}>
           <Image src="/p1.jpeg" alt="featured" fill className={styles.image}/>
