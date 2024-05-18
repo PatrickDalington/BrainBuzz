@@ -1,4 +1,10 @@
-:root{
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+  
+
+
+  :root{
     --bg: black;
     --textColor: #000000;
     --softBg: #f0f0f0;

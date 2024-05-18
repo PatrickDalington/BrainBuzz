@@ -2,6 +2,10 @@
    margin-top: 30px;
 }
 
+.card{
+    height: 50px;
+    width: 50px;
+}
 
 .title{
     font-size: 4.5rem;
@@ -16,6 +20,8 @@
     gap: 50px;
 
 }
+
+
 
 .imgContainer{
     flex: 1;
