@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useContext } from 'react'
-import { TheamContext } from '@/context/TheamContext'
+import { TheamContext } from '../context/TheamContext'
 import { useEffect, useState } from 'react'
 
 function ThemeProvider({children}) {

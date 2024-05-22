@@ -10,7 +10,7 @@ const TheamToggle = () => {
 
   const {toggle, theam} = useContext(TheamContext)
 
-  console.log("This is " + theam)
+ 
 
   return (
     <div className={styles.container} onClick={toggle}  
