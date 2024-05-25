@@ -6,8 +6,6 @@ import styles from './menuPost.module.css'
 const MenuPost = ({withImage}) => {
   return (
 
-
-
     <div className={styles.items}>
         
         <Link href="/" className={styles.item}>

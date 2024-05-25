@@ -15,6 +15,9 @@
     width: 100%;
 }
 
+.loading{
+
+}
 
 .button, .addButton{
     width: 36px;
@@ -49,6 +52,7 @@
     border: none;
     outline: none;
     background-color: transparent;
+    color: var(--textColor);
 }
 
 .addButton{

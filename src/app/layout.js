@@ -4,7 +4,6 @@ import NavBar from '../components/navbar/NavBar'
 import Footer from '../components/footer/Footer'
 import { TheamContextProvider } from '../context/TheamContext'
 import ThemeProvider from '../providers/ThemeProvider'
-import { SessionProvider } from 'next-auth/react'
 import AuthProvider from '../providers/AuthProvider'
 
 const inter = Inter({ subsets: ['latin'] })
