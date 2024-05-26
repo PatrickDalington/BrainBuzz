@@ -14,7 +14,6 @@ import {
 } from "firebase/storage";
 import { app } from '../../utils/firebase';
 import axios from 'axios';
-import dynamic from 'next/dynamic';
 
 
 
@@ -84,7 +83,8 @@ const WritePage = () => {
 
   const handleSubmit = async () => {
     
-    const res = axios.post(("/api/posts", {
+    const res = await fetch("/api/posts", {
+      method: "POST",
       body: JSON.stringify({
         title,
         desc: value,
@@ -92,7 +92,7 @@ const WritePage = () => {
         slug: slugify(title),
         catSlug: catSlug || "lifestyle", //If not selected, choose the general category
       }),
-    }));
+    });
 
     if (res.status === 200) {
       const data = await res.json();
