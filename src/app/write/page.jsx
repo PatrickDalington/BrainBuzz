@@ -1,69 +1,58 @@
 "use client";
 
-import { useRouter } from 'next/navigation';
-import styles from '../write/writePage.module.css'
-import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import {React, useRef, useState} from 'react';
+import Image from "next/image";
+import styles from "./writePage.module.css";
 import "react-quill/dist/quill.bubble.css";
+import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import {
-  getStorage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-} from "firebase/storage";
-import { app } from '../../utils/firebase';
-import axios from 'axios';
+import dynamic from "next/dynamic";
+import { useEdgeStore } from "../../lib/edgestore";
+import { SingleImageDrop } from '../../components/singleImage/SingleImageDrop';
 
 
+
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false})
 
 const WritePage = () => {
   const { status } = useSession();
-  const router = useRouter();
 
-  const ReactQuill = dynamic(() => import("react-quill"), { ssr: false})
+  const router = useRouter();
+  const quillRef = useRef(null);
 
   const [open, setOpen] = useState(false);
-  const [file, setFile] = useState(null);
-  const [media, setMedia] = useState("");
+  let [file, setFile] = useState();
+  const { edgestore } = useEdgeStore();
   const [value, setValue] = useState("");
   const [title, setTitle] = useState("");
+  const [media, setMedia] = useState(null)
   const [catSlug, setCatSlug] = useState("");
+  
 
-  useEffect(() => {
-    const storage = getStorage(app);
-    const upload = () => {
-      const name = new Date().getTime() + file.name;
-      const storageRef = ref(storage, name);
 
-      const uploadTask = uploadBytesResumable(storageRef, file);
+  // const insertImage = (url) => {
+  //   const editor = quillRef.current.getEditor();
+  //   const range = editor.getSelection();
+  //   if (range) {
+  //     editor.insertEmbed(range.index, 'image', url);
+      
+  //   }
+  // };
 
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log("Upload is " + progress + "% done");
-          switch (snapshot.state) {
-            case "paused":
-              console.log("Upload is paused");
-              break;
-            case "running":
-              console.log("Upload is running");
-              break;
-          }
-        },
-        (error) => {},
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            setMedia(downloadURL);
-          });
-        }
-      );
-    };
+  const handleImageChange = async(event) => {
+    //const { name } = event.target;
+    const file = event.target.files?.[0];
+    setFile(file);
 
-    file && upload();
-  }, [file]);
+    const res = await edgestore.publicImage.upload({
+      file,
+      options: {
+        temporary: true,
+      },
+    })
+
+    setMedia(res.url)
+  }
 
   if (status === "loading") {
     return <div className={styles.loading}>Loading...</div>;
@@ -82,40 +71,57 @@ const WritePage = () => {
       .replace(/^-+|-+$/g, "");
 
   const handleSubmit = async () => {
+     // Upload Image
+     
+          const response = await fetch("/api/posts", {
+            method: "POST",
+            body: JSON.stringify({
+              title,
+              desc: value,
+              img: media,
+              slug: slugify(title),
+              catSlug: catSlug || "lifestyle", //If not selected, choose the general category
+            }),
+          });
     
-    const res = await fetch("/api/posts", {
-      method: "POST",
-      body: JSON.stringify({
-        title,
-        desc: value,
-        img: media,
-        slug: slugify(title),
-        catSlug: catSlug || "lifestyle", //If not selected, choose the general category
-      }),
-    });
-
-    if (res.status === 200) {
-      const data = await res.json();
-      router.push(`/posts/${data.slug}`);
-    }
+          if (response.status === 200) {
+            await response.json().then((response) => {
+              router.push(`/posts/${response.slug}`);
+            });
+          }
+      
   };
 
   return (
     <div className={styles.container}>
-      <input
-        type="text"
-        placeholder="Title"
-        className={styles.input}
-        onChange={(e) => setTitle(e.target.value)}
-      />
-      <select className={styles.select} onChange={(e) => setCatSlug(e.target.value)}>
-        <option value="style">lifestyle</option>
-        <option value="fashion">coding</option>
-        <option value="food">relationship</option>
-        <option value="culture">food</option>
-        <option value="travel">travel</option>
-        <option value="coding">music</option>
-      </select>
+        <div className={styles.iconholders} >
+        <input
+          type="text"
+          placeholder="Title"
+          className={styles.input}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+
+        <select className={styles.select} onChange={(e) => setCatSlug(e.target.value)}>
+          <option value="lifestyle">lifestyle</option>
+          <option value="relationship">relationship</option>
+          <option value="news">news</option>
+          <option value="ai">artificial inteligence</option>
+          <option value="travel">travel</option>
+          <option value="coding">coding</option>
+        </select>
+
+        
+        
+           <SingleImageDrop onChange={
+            (file) =>{
+              setFile(file)
+            }
+           } ref={quillRef} height={200} width={300} className={styles.postimage} value={file}/>
+       
+       
+      </div>
+      
       <div className={styles.editor}>
         <button className={styles.button} onClick={() => setOpen(!open)}>
           <Image src="/plus.png" alt="" width={16} height={16} />
@@ -125,7 +131,9 @@ const WritePage = () => {
             <input
               type="file"
               id="image"
-              onChange={(e) => setFile(e.target.files[0])}
+              accept="image/*"
+              capture="camera"
+              onChange={handleImageChange}
               style={{ display: "none" }}
             />
             <button className={styles.addButton}>

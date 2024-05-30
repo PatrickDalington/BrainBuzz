@@ -5,6 +5,7 @@ import Footer from '../components/footer/Footer'
 import { TheamContextProvider } from '../context/TheamContext'
 import ThemeProvider from '../providers/ThemeProvider'
 import AuthProvider from '../providers/AuthProvider'
+import { EdgeStoreProvider } from '../lib/edgestore'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -23,9 +24,9 @@ export default function RootLayout({ children }) {
           <div className='container'>
               <div className='wrapper'>
                 <NavBar/>
-                
-                  {children}
-                
+                  <EdgeStoreProvider>
+                    {children}
+                  </EdgeStoreProvider>
                 <Footer/>
               </div>
           </div>

@@ -1,0 +1,14 @@
+.container{
+    display: flex;
+    justify-items: center;
+    flex-direction: column;
+    
+    column-gap: 10px;
+}
+
+
+
+
+.title{
+   font-size: 80px;
+}

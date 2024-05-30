@@ -65,6 +65,12 @@
     .title{
         font-size: 72px;
     }
+    .cimage{
+        height: 250px; 
+     }
+     .imgContainer{
+         height: 205px;
+     }
     
 }
 
@@ -74,8 +80,18 @@
         font-size: 64px;
     }
     
+    .cimage{
+       height: 300px; 
+    }
     .imgContainer{
-        display: none;
+        height: 300px;
+    }
+
+    .textContainer{
+        margin-top: 10px;
+    }
+    .post{
+        display: block;
     }
 }
 
@@ -85,6 +101,13 @@
     .title{
         font-size: 46px;
     }
+
+    .cimage{
+        height: 400px; 
+     }
+     .imgContainer{
+         height: 400px;
+     }
     
 }
 
@@ -93,5 +116,12 @@
     .title{
         font-size: 36px;
     }
+
+    .cimage{
+        height: 250px; 
+     }
+     .imgContainer{
+         height: 250px;
+     }
     
 }

@@ -6,7 +6,8 @@
 
   :root{
     --bg: black;
-    --textColor: #000000;
+    --bgTrans: rgba(0, 0, 0, 0.089);
+    --textColor: #4e4b4b95;
     --softBg: #f0f0f0;
     --softTextColor: #626262;
 }
